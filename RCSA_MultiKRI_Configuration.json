@@ -1,0 +1,83 @@
+{
+  "application_name": "Data-Driven Multi-KRI RCSA Dashboard",
+  "selected_model": "Ridge Regression",
+  "prediction_target": "Next-day Historical Refund Operations",
+  "model_file": "Final_Multi_KRI_Predictive_Model.pkl",
+  "sklearn_version_used_to_create_model": "1.8.0",
+  "features": [
+    "current_chargebacks",
+    "current_refund_operations",
+    "chargeback_lag_1",
+    "chargeback_lag_2",
+    "chargeback_lag_3",
+    "chargeback_lag_7",
+    "refund_lag_1",
+    "refund_lag_2",
+    "refund_lag_3",
+    "refund_lag_7",
+    "chargeback_mean_3",
+    "chargeback_mean_7",
+    "refund_mean_3",
+    "refund_mean_7",
+    "chargeback_std_7",
+    "refund_std_7",
+    "chargeback_change_1",
+    "chargeback_change_3",
+    "refund_change_1",
+    "refund_change_3",
+    "day_sin",
+    "day_cos"
+  ],
+  "kri3": {
+    "name": "Waiting Refunds After 14 Days",
+    "column": "KRI3_waiting_refunds_after_14_days",
+    "direction": "higher_is_worse",
+    "q1": 35.5,
+    "q3": 45.0,
+    "weight": 0.5
+  },
+  "kri4": {
+    "name": "Daily Chargebacks",
+    "column": "KRI4_chargebacks",
+    "direction": "higher_is_worse",
+    "q1": 194.0,
+    "q3": 1534.75,
+    "weight": 0.5
+  },
+  "kri5": {
+    "name": "Historical Refund Operations",
+    "column": "KRI5_historical_refund_operations",
+    "role": "predictive operational context"
+  },
+  "composite_boundaries": {
+    "green_upper_exclusive": 1.5,
+    "red_lower_inclusive": 2.5
+  },
+  "validation": {
+    "split_method": "chronological 80/20 holdout",
+    "total_modelling_observations": 140,
+    "training_observations": 112,
+    "testing_observations": 28,
+    "training_target_start": "2026-04-09",
+    "training_target_end": "2026-07-29",
+    "testing_target_start": "2026-07-30",
+    "testing_target_end": "2026-08-26",
+    "ridge_regression": {
+      "mae": 82.77046497074538,
+      "rmse": 199.65774823082248,
+      "r2": 0.8527742813017871,
+      "mape_percent": 15.328204313484148
+    },
+    "random_forest_regression": {
+      "mae": 439.5718341388766,
+      "rmse": 450.55784517241625,
+      "r2": 0.2502569343329457,
+      "mape_percent": 77.64319570907726
+    }
+  },
+  "notes": [
+    "KRI3 and KRI4 thresholds are empirical proof-of-concept quartile thresholds, not approved risk-appetite limits.",
+    "KRI3 and KRI4 weights are illustrative 0.50/0.50 weights.",
+    "KRI5 is forecast as operational context and is not automatically treated as a Red/Amber/Green risk indicator."
+  ]
+}
